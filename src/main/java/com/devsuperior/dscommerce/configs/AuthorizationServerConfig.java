@@ -44,9 +44,9 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.devsuperior.dscommerce.config.customgrant.CustomPasswordAuthenticationConverter;
-import com.devsuperior.dscommerce.config.customgrant.CustomPasswordAuthenticationProvider;
-import com.devsuperior.dscommerce.config.customgrant.CustomUserAuthorities;
+import com.devsuperior.dscommerce.configs.customgrant.CustomPasswordAuthenticationConverter;
+import com.devsuperior.dscommerce.configs.customgrant.CustomPasswordAuthenticationProvider;
+import com.devsuperior.dscommerce.configs.customgrant.CustomUserAuthorities;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
