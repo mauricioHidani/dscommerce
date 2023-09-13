@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,6 +40,7 @@ public class ProductService {
     }
 
     @Transactional
+    @PreAuthorize("hasAndRole('ROLE_ADMIN')")
     public ProductDTO insert(ProductDTO dto) {
         Product entity = new Product();
         copyDtoToEntity(dto, entity);
@@ -47,6 +49,7 @@ public class ProductService {
     }
 
     @Transactional
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ProductDTO update(Long id, ProductDTO dto) {
         try {
             Product entity = repository.getReferenceById(id);
@@ -60,6 +63,7 @@ public class ProductService {
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void delete(Long id) {
     	if (!repository.existsById(id)) {
     		throw new ResourceNotFoundException("Recurso não encontrado");
