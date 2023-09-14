@@ -1,14 +1,19 @@
 package com.devsuperior.dscommerce.services;
 
+import com.devsuperior.dscommerce.dto.UserDTO;
 import com.devsuperior.dscommerce.entities.Role;
 import com.devsuperior.dscommerce.entities.User;
 import com.devsuperior.dscommerce.projections.UserDetailsProjection;
 import com.devsuperior.dscommerce.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -38,4 +43,17 @@ public class UserService implements UserDetailsService {
 		
 		return user;
 	}
+
+	protected User authenticated() {
+		try {
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication(); // captura usuário autenticado que está no contexto atual da app
+			Jwt jwtPrincipal = (Jwt) auth.getPrincipal(); // caprura o jwt desse contexto atual
+			String username = jwtPrincipal.getClaim("username"); // captura o claim do jwt que está denominado como `username`
+			return repository.findByEmail(username).get(); // usa do repository para recuperar o usuário com o `username` do contexto atual
+		}
+		catch (Exception e) {
+			throw new UsernameNotFoundException("Email not found!");
+		}
+	}
+
 }
