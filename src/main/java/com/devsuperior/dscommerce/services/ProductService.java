@@ -40,7 +40,7 @@ public class ProductService {
     }
 
     @Transactional
-    @PreAuthorize("hasAndRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ProductDTO insert(ProductDTO dto) {
         Product entity = new Product();
         copyDtoToEntity(dto, entity);
