@@ -86,6 +86,10 @@ public class Order {
         return items;
     }
 
+    public void addItem(OrderItem item) {
+        items.add(item);
+    }
+
     public List<Product> getProducts() {
         return items.stream().map(x -> x.getProduct()).toList();
     }
