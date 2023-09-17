@@ -40,7 +40,6 @@ public class ProductService {
     }
 
     @Transactional
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ProductDTO insert(ProductDTO dto) {
         Product entity = new Product();
         copyDtoToEntity(dto, entity);
@@ -49,7 +48,6 @@ public class ProductService {
     }
 
     @Transactional
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ProductDTO update(Long id, ProductDTO dto) {
         try {
             Product entity = repository.getReferenceById(id);
@@ -63,7 +61,6 @@ public class ProductService {
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void delete(Long id) {
     	if (!repository.existsById(id)) {
     		throw new ResourceNotFoundException("Recurso não encontrado");
