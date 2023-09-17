@@ -2,6 +2,7 @@ package com.devsuperior.dscommerce.controllers.handlers;
 
 import java.time.Instant;
 
+import com.devsuperior.dscommerce.services.exceptions.ForbiddenException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -41,5 +42,20 @@ public class ControllerExceptionHandler {
             err.addError(f.getField(), f.getDefaultMessage());
         }
         return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<CustomErrorDTO> firbidden(ForbiddenException e,
+                                                    HttpServletRequest request) {
+        HttpStatus status = HttpStatus.FORBIDDEN;
+        ValidationErrorDTO err = new ValidationErrorDTO(
+                Instant.now(),
+                status.value(),
+                e.getMessage(),
+                request.getRequestURI()
+        );
+        return ResponseEntity
+                .status(status)
+                .body(err);
     }
 }
