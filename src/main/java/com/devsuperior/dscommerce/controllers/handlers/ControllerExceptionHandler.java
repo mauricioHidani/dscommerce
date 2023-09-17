@@ -21,21 +21,33 @@ import jakarta.servlet.http.HttpServletRequest;
 public class ControllerExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<CustomErrorDTO> resourceNotFound(ResourceNotFoundException e, HttpServletRequest request) {
+    public ResponseEntity<CustomErrorDTO> resourceNotFound(ResourceNotFoundException e,
+                                                           HttpServletRequest request) {
         HttpStatus status = HttpStatus.NOT_FOUND;
-        CustomErrorDTO err = new CustomErrorDTO(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
+        CustomErrorDTO err = new CustomErrorDTO(
+                Instant.now(), status.value(),
+                e.getMessage(),
+                request.getRequestURI()
+        );
         return ResponseEntity.status(status).body(err);
     }
 
     @ExceptionHandler(DatabaseException.class)
-    public ResponseEntity<CustomErrorDTO> database(DatabaseException e, HttpServletRequest request) {
+    public ResponseEntity<CustomErrorDTO> database(DatabaseException e,
+                                                   HttpServletRequest request) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
-        CustomErrorDTO err = new CustomErrorDTO(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
+        CustomErrorDTO err = new CustomErrorDTO(
+                Instant.now(),
+                status.value(),
+                e.getMessage(),
+                request.getRequestURI()
+        );
         return ResponseEntity.status(status).body(err);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<CustomErrorDTO> methodArgumentNotValidation(MethodArgumentNotValidException e, HttpServletRequest request) {
+    public ResponseEntity<CustomErrorDTO> methodArgumentNotValidation(MethodArgumentNotValidException e,
+                                                                      HttpServletRequest request) {
         HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
         ValidationErrorDTO err = new ValidationErrorDTO(Instant.now(), status.value(), "Dados inválidos", request.getRequestURI());
         for (FieldError f : e.getBindingResult().getFieldErrors()) {
