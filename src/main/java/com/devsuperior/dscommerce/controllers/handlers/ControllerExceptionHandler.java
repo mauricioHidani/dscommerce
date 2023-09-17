@@ -49,10 +49,14 @@ public class ControllerExceptionHandler {
     public ResponseEntity<CustomErrorDTO> methodArgumentNotValidation(MethodArgumentNotValidException e,
                                                                       HttpServletRequest request) {
         HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
-        ValidationErrorDTO err = new ValidationErrorDTO(Instant.now(), status.value(), "Dados inválidos", request.getRequestURI());
-        for (FieldError f : e.getBindingResult().getFieldErrors()) {
-            err.addError(f.getField(), f.getDefaultMessage());
-        }
+        ValidationErrorDTO err = new ValidationErrorDTO(
+                Instant.now(),
+                status.value(),
+                "Dados inválidos",
+                request.getRequestURI()
+        );
+        e.getBindingResult().getFieldErrors()
+                .forEach(f -> err.addError(f.getField(), f.getDefaultMessage()));
         return ResponseEntity.status(status).body(err);
     }
 
