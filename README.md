@@ -282,3 +282,4 @@ flowchart
 ## Documentação
 
 - [Postman](https://documenter.getpostman.com/view/11829765/2s9YC7TC81) : https://documenter.getpostman.com/view/11829765/2s9YC7TC81
+- [Postman Json](https://github.com/mauricioHidani/dscommerce/blob/main/postmanCollection/DSCommerce.postman_collection.json) : https://github.com/mauricioHidani/dscommerce/blob/main/postmanCollection/DSCommerce.postman_collection.json
